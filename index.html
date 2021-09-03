@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Rock Paper Scissors</title>
+</head>
+
+<body>
+    <h1 style="text-align:center; margin-top:20%;">
+        Let's play Rock Paper Scissors!<br />Refresh to play again!
+    </h1>
+    <script type="text/javascript">
+        // TODO: Create an array of the three game choices (Rock, Paper, or Scissors).
+        var gameChoices = ["Rock ", "Paper ", "Scissors "];
+        var gameVerbs = ["Smashes ", "Covers ", "Cuts ", "Hugs "];
+
+        // TODO: Create variables to hold the number of wins, losses, and ties. They start at 0.
+        var wins = 0;
+        var losses = 0;
+        var ties = 0;
+        var round = 0;
+        var playerWins = false;
+
+        /*  Best of seven tourny   while no player has won more the 50% of 7 games keep playing  */
+        while (wins < (13 / 2) && losses < (13 / 2)) {
+            round++; // a new round
+            // reset playerWins everyround to false by default
+            playerWins = false;
+            // TODO: Randomly choose a choice from the gameChoices array. This is the computer's turn.
+            var computerTurn = Math.floor(Math.random() * 3);
+            console.log("Computer chooses " + gameChoices[computerTurn]);
+
+            // TODO: Collect the user's response and convert to lower case. This is the user's turn.
+            var userTurn = getValidInput(round);
+            //console.log("Player chooses " + gameChoices[userTurn]);
+
+            // TODO: Create the game logic to run if the user chooses a valid game choice
+            if (computerTurn === userTurn) {
+                //console.log("It's a Draw!");
+                ties++;
+            } /*  if not a tie  */ //scissors   vs    //rock  */
+            else if (computerTurn === 2 && userTurn === 0) {
+                //console.log("Player Wins: Rock Smashes Scissors")
+                playerWins = true;
+            }
+            /*  need to make an exception to winner has higher score when scissors are chosen  */
+            else if (userTurn === 2 && computerTurn === 0) {
+                //console.log("Computer Wins: Rock Smashes Scissors")
+            } else if (userTurn > computerTurn) {
+                playerWins = true;
+            }
+
+            if (playerWins) {
+                wins++;
+                console.log("Player Wins!!!");
+                console.log(gameChoices[userTurn] + gameVerbs[userTurn] + gameChoices[computerTurn]);
+            } else if (computerTurn === userTurn) {
+                console.log("It's a Draw! " + gameChoices[computerTurn] + gameVerbs[3] + gameChoices[userTurn])
+            } else if (userTurn != computerTurn) {
+                losses++;
+                console.log("Computer Wins.");
+                console.log(gameChoices[computerTurn] + gameVerbs[computerTurn] + gameChoices[userTurn]);
+            }
+        }
+
+        // TODO: When the game is over, alert the final total to the user. We can use the \n character to make a line break.
+        let endMessage = "Thank you for playing. Please try again.";
+        if (wins > losses) {
+            endMessage = "Congratulations you were victorious!!"
+        }
+
+        window.alert(endMessage + "\n" + "RESULTS:\nWins: " + wins + "\nLosses: " + losses + "\nDraws: " + ties + "\nRounds played: " + round);
+
+
+        function getValidInput(round) {
+            let userInput = window.prompt("Round: " + round + "\nWill you choose Rock, Paper, or Scissors?");
+
+            switch (userInput.toUpperCase()) {
+                case "1":
+                case "ROCK":
+                    return 0;
+
+                case "2":
+                case "PAPER":
+                    return 1;
+
+                case "3":
+                case "SCISSOR":
+                    return 2;
+
+                default:
+                    getValidInput(round);
+            }
+        }
+    </script>
+</body>
+
+</html>
