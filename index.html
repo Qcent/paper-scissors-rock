@@ -5,12 +5,55 @@
     <meta charset="UTF-8" />
     <title>Rock Paper Scissors</title>
 </head>
+<style>
+    body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    body h1 {
+        margin-top: 5%;
+        text-align: center;
+    }
+    
+    main {
+        display: flex;
+        flex-wrap: wrap;
+        width: 20%;
+        justify-content: center;
+        text-align: center;
+    }
+    
+    main h3 {
+        width: 100%;
+        border-bottom: 3px solid black;
+    }
+    
+    main div {
+        width: 35%;
+        padding 0 5%;
+    }
+    
+    .gameLog {
+        margin-top: 20px;
+        width: 100%;
+    }
+</style>
 
 <body>
-    <h1 style="text-align:center; margin-top:20%;">
+    <h1>
         Let's play Rock Paper Scissors!<br />Refresh to play again!
     </h1>
+    <main></main>
     <script type="text/javascript">
+        console.stdlog = console.log.bind(console);
+        console.logs = [];
+        console.log = function() {
+            console.logs.push(Array.from(arguments));
+            console.stdlog.apply(console, arguments);
+        }
+
         // TODO: Create an array of the three game choices (Rock, Paper, or Scissors).
         var gameChoices = ["Rock ", "Paper ", "Scissors "];
         var gameVerbs = ["Smashes ", "Covers ", "Cuts ", "Hugs "];
@@ -23,7 +66,7 @@
 
 
         /*  Best of seven tourny   while no player has won more the 50% of 7 games keep playing  */
-        while (wins < (13 / 2) && losses < (13 / 2)) {
+        while (wins < (7 / 2) && losses < (7 / 2)) {
             round++; // a new round
 
             // TODO: Randomly choose a choice from the gameChoices array. This is the computer's turn.
@@ -57,23 +100,29 @@
         if (wins > losses) {
             endMessage = "Congratulations you were victorious!!"
         }
+        let stats = "<h3>RESULTS: </h3> <div>Rounds:</div><div>" + round + "</div><div>Wins:</div><div>" + wins + "</div><div> Losses:</div><div>" + losses + "</div><div> Draws:</div><div>" + ties + "</div>";
+        //window.alert(endMessage + stats);
 
-        window.alert(endMessage + "\n" + "RESULTS:\nWins: " + wins + "\nLosses: " + losses + "\nDraws: " + ties + "\nRounds played: " + round);
+        document.querySelector("main").innerHTML = "<hr><h2>" + endMessage + "</h2>" +
+            stats + "<div class='gameLog'>Game Log:<br />" + String(console.logs).replace(/,/g, "<br>") + "</div>";
 
 
         function getValidInput(round) {
-            let userInput = window.prompt("Round: " + round + "\nWill you choose Rock, Paper, or Scissors?");
+            let userInput = window.prompt("Round: " + round + "\nWill you choose:\n     1.  Rock\n     2.  Paper\n     3.  Scissors");
 
             switch (userInput.toUpperCase()) {
                 case "1":
+                case "R":
                 case "ROCK":
                     return 0;
 
                 case "2":
+                case "P":
                 case "PAPER":
                     return 1;
 
                 case "3":
+                case "S":
                 case "SCISSOR":
                     return 2;
 
