@@ -20,44 +20,32 @@
         var losses = 0;
         var ties = 0;
         var round = 0;
-        var playerWins = false;
+
 
         /*  Best of seven tourny   while no player has won more the 50% of 7 games keep playing  */
         while (wins < (13 / 2) && losses < (13 / 2)) {
             round++; // a new round
-            // reset playerWins everyround to false by default
-            playerWins = false;
+
             // TODO: Randomly choose a choice from the gameChoices array. This is the computer's turn.
             var computerTurn = Math.floor(Math.random() * 3);
-            console.log("Computer chooses " + gameChoices[computerTurn]);
+            //console.log("Computer chooses " + gameChoices[computerTurn]);
 
             // TODO: Collect the user's response and convert to lower case. This is the user's turn.
             var userTurn = getValidInput(round);
             //console.log("Player chooses " + gameChoices[userTurn]);
 
             // TODO: Create the game logic to run if the user chooses a valid game choice
-            if (computerTurn === userTurn) {
-                //console.log("It's a Draw!");
-                ties++;
-            } /*  if not a tie  */ //scissors   vs    //rock  */
-            else if (computerTurn === 2 && userTurn === 0) {
-                //console.log("Player Wins: Rock Smashes Scissors")
-                playerWins = true;
-            }
-            /*  need to make an exception to winner has higher score when scissors are chosen  */
-            else if (userTurn === 2 && computerTurn === 0) {
-                //console.log("Computer Wins: Rock Smashes Scissors")
-            } else if (userTurn > computerTurn) {
-                playerWins = true;
-            }
 
-            if (playerWins) {
+            /* The only high value that loses to a lower value is scissors to rock 
+            /* so if userTurn > computerTurn or user picked rock and comp picked scissors user wins  */
+            if (userTurn > computerTurn || (userTurn === 0 && computerTurn === 2)) {
                 wins++;
                 console.log("Player Wins!!!");
                 console.log(gameChoices[userTurn] + gameVerbs[userTurn] + gameChoices[computerTurn]);
             } else if (computerTurn === userTurn) {
+                ties++;
                 console.log("It's a Draw! " + gameChoices[computerTurn] + gameVerbs[3] + gameChoices[userTurn])
-            } else if (userTurn != computerTurn) {
+            } else {
                 losses++;
                 console.log("Computer Wins.");
                 console.log(gameChoices[computerTurn] + gameVerbs[computerTurn] + gameChoices[userTurn]);
@@ -90,7 +78,7 @@
                     return 2;
 
                 default:
-                    getValidInput(round);
+                    return getValidInput(round);
             }
         }
     </script>
