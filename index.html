@@ -81,18 +81,18 @@
 
             /* The only high value that loses to a lower value is scissors to rock // scissors(2) - rock(0) = 2
             /* so if userTurn > computerTurn or user:rock vs comp:scissors AND NOT computer:rock vr user:scissors :: user wins  */
-            if ((userTurn > computerTurn || computerTurn - userTurn > 1)) && !(userTurn - computerTurn > 1)) {
-            wins++;
-            console.log("Player Wins!!!");
-            console.log(gameChoices[userTurn] + gameVerbs[userTurn] + gameChoices[computerTurn]);
-        } else if (computerTurn === userTurn) {
-            ties++;
-            console.log("It's a Draw! " + gameChoices[computerTurn] + gameVerbs[3] + gameChoices[userTurn])
-        } else {
-            losses++;
-            console.log("Computer Wins.");
-            console.log(gameChoices[computerTurn] + gameVerbs[computerTurn] + gameChoices[userTurn]);
-        }
+            if ((userTurn > computerTurn || computerTurn - userTurn > 1) && !(userTurn - computerTurn > 1)) {
+                wins++;
+                console.log("Player Wins!!!");
+                console.log(gameChoices[userTurn] + gameVerbs[userTurn] + gameChoices[computerTurn]);
+            } else if (computerTurn === userTurn) {
+                ties++;
+                console.log("It's a Draw! " + gameChoices[computerTurn] + gameVerbs[3] + gameChoices[userTurn])
+            } else {
+                losses++;
+                console.log("Computer Wins.");
+                console.log(gameChoices[computerTurn] + gameVerbs[computerTurn] + gameChoices[userTurn]);
+            }
         }
 
         // TODO: When the game is over, alert the final total to the user. We can use the \n character to make a line break.
